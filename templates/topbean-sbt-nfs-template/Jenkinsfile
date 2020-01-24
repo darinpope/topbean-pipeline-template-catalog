@@ -32,9 +32,9 @@ spec:
     tty: true
   volumes:
   - name: nfs-volume
-      nfs: 
-        server: fs-3215e8b2.efs.us-east-1.amazonaws.com
-        path: /
+    nfs: 
+      server: fs-3215e8b2.efs.us-east-1.amazonaws.com
+      path: /
       """
     }
   }
