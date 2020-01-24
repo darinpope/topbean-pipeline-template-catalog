@@ -1,4 +1,5 @@
 @Library("topbean-shared-library") _
+def branchName = getEventValue(key:"branchName")
 pipeline {
   agent{
     kubernetes {
@@ -42,7 +43,17 @@ volumes:
     stage("Build Prep") {
       steps {
         container("sbt") {
-          git branch: getEventValue(key:"branchName"), url: "${gitUrl}" , credentialsId: "${credentialsId}"
+          checkout([$class: 'GitSCM',
+            branches: scm.branches,
+            extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 1],
+                          [$class: 'LocalBranch', localBranch: branch],
+                          [$class: 'SubmoduleOption', recursiveSubmodules: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 3, trackingSubmodules: false]
+                        ],
+            gitTool: 'Default', // JGit in git client plugin does not provide fully compatible submodule support
+            userRemoteConfigs: [
+              [name: scm.userRemoteConfigs[0].name, url: scm.userRemoteConfigs[0].url, refspec: "+refs/heads/${branchName}:refs/remotes/origin/${branchName}"]
+            ]
+          ])
         }
       }
     }
