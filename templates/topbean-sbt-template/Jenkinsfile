@@ -1,3 +1,4 @@
+@Library("topbean-shared-library") _
 pipeline {
   agent{
     kubernetes {
@@ -36,7 +37,7 @@ spec:
     stage("Build Prep") {
       steps {
         container("sbt") {
-          git branch: "master", url: "${gitUrl}" , credentialsId: "${credentialsId}"
+          git branch: getEventValue(key:"branchName"), url: "${gitUrl}" , credentialsId: "${credentialsId}"
         }
       }
     }
