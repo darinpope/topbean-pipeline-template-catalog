@@ -1,0 +1,52 @@
+pipeline {
+  agent{
+    kubernetes {
+      label "${projectId}"
+      yamlFile 'kubernetespod.yaml'
+    }
+  }
+  triggers {
+    eventTrigger jmespathQuery("""event=="${projectId}""""")
+  }
+  environment {
+    ARTIFACTORY_MAVEN=credentials("artifactory-maven")
+    JFROG_CLI_OFFER_CONFIG=false
+  }
+  stages {
+    stage("Build Prep") {
+      steps {
+        container("sbt") {
+          sh """
+            sbt version
+          """
+        }
+        container("jfrog") {
+          sh """
+            jfrog --version
+          """
+        }
+      }
+    }
+    stage("${projectId} Build") {
+      steps {
+        dir("${subdirectory}") {
+          container("sbt") {
+            sh """
+              sbt clean stage
+            """
+          }
+          container("alpine-zip") {
+            sh """
+              ./eb-package.sh
+            """
+          }
+          container("jfrog") {
+            sh """
+              jfrog rt upload --url http://34.82.23.119/artifactory/generic-local/ --user ${ARTIFACTORY_MAVEN_USR} --password ${ARTIFACTORY_MAVEN_PSW} "${projectId}*.zip" topbean/${projectId}/
+            """
+          }
+        }
+      }
+    }
+  }
+}
