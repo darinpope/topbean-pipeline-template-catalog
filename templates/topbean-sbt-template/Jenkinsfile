@@ -36,14 +36,7 @@ spec:
     stage("Build Prep") {
       steps {
         container("sbt") {
-          sh """
-            sbt version
-          """
-        }
-        container("jfrog") {
-          sh """
-            jfrog --version
-          """
+          git branch: "master", url: "${gitUrl}" , credentialsId: "${credentialsId}"
         }
       }
     }
