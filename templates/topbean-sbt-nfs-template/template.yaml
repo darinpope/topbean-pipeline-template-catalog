@@ -1,0 +1,10 @@
+type: pipeline-template
+version: 1
+
+name: topbean-sbt-nfs-template
+description: Topbean SBT NFS Template
+parameters:
+  - name: projectId
+    displayName: Project Id
+  - name: subdirectory
+    displayName: Subdirectory
