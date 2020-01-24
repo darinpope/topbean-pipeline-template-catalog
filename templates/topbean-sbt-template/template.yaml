@@ -10,5 +10,7 @@ parameters:
     displayName: Git URL
   - name: credentialsId
     displayName: Credentials Id
+    type: credentials
+    defaultValue: artifactory-maven
   - name: subdirectory
     displayName: subdirectory
