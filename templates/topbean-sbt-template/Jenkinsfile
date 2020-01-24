@@ -27,7 +27,7 @@ pipeline {
         }
       }
     }
-    stage("${projectId} Build") {
+    stage("Build") {
       steps {
         dir("${subdirectory}") {
           container("sbt") {
