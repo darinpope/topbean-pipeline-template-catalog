@@ -13,4 +13,4 @@ parameters:
     type: credentials
     defaultValue: artifactory-maven
   - name: subdirectory
-    displayName: subdirectory
+    displayName: Subdirectory
