@@ -6,7 +6,7 @@ pipeline {
     }
   }
   triggers {
-    eventTrigger jmespathQuery("""event=="${projectId}""""")
+    eventTrigger jmespathQuery("""event=='${projectId}'""")
   }
   environment {
     ARTIFACTORY_MAVEN=credentials("artifactory-maven")
