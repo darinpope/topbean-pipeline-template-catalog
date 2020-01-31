@@ -59,6 +59,7 @@ spec:
                git --version
                git init ${WORKSPACE}
                git fetch --tags --progress /home/jenkins/git/multirepository-cache.git +refs/heads/*:refs/remotes/origin/*
+               ls -last
             """
           
 //          checkout([$class: 'GitSCM',
