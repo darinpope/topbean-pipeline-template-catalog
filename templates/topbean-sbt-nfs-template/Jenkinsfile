@@ -8,9 +8,6 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
-  securityContext:
-    runAsUser: 1000
-    fsGroup: 1000
   containers:
   - name: sbt
     image: hseeberger/scala-sbt:8u222_1.3.7_2.13.1
@@ -58,7 +55,7 @@ spec:
         dir("${subdirectory}") {
           container("sbt") {
             sh """
-               sleep 6000
+               #sleep 6000
                #find /home/jenkins/git/multirepository-cache.git -type f
                git clone --reference /home/jenkins/git/multirepository-cache.git https://github.com/darinpope/topbean-cb-primary.git
             """
