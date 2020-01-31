@@ -58,7 +58,7 @@ spec:
                #sleep 6000
                #find /home/jenkins/git/multirepository-cache.git -type f
                cd /home/jenkins/git/multirepository-cache.git
-               git clone --reference /home/jenkins/git/multirepository-cache.git https://github.com/darinpope/topbean-cb-primary.git
+               git --version
             """
           
 //          checkout([$class: 'GitSCM',
