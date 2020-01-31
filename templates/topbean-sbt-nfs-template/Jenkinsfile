@@ -53,20 +53,22 @@ spec:
       steps {
         container("sbt") {
           sh """
-             find /home/jenkins/git/multirepository-cache.git -type f
+             #find /home/jenkins/git/multirepository-cache.git -type f
+             git rev-parse --abbrev-ref HEAD
+             git ls-files
           """
           
-          checkout([$class: 'GitSCM',
-            branches: scm.branches,
-            extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 1],
-                          [$class: 'LocalBranch', localBranch: branch],
-                          [$class: 'SubmoduleOption', recursiveSubmodules: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 3, trackingSubmodules: false]
-                        ],
-            gitTool: 'Default', // JGit in git client plugin does not provide fully compatible submodule support
-            userRemoteConfigs: [
-              [name: scm.userRemoteConfigs[0].name, url: scm.userRemoteConfigs[0].url, refspec: "+refs/heads/${branchName}:refs/remotes/origin/${branchName}"]
-            ]
-          ])
+//          checkout([$class: 'GitSCM',
+//            branches: scm.branches,
+//            extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 1],
+//                          [$class: 'LocalBranch', localBranch: branch],
+//                          [$class: 'SubmoduleOption', recursiveSubmodules: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 3, trackingSubmodules: false]
+//                        ],
+//            gitTool: 'Default', // JGit in git client plugin does not provide fully compatible submodule support
+//            userRemoteConfigs: [
+//              [name: scm.userRemoteConfigs[0].name, url: scm.userRemoteConfigs[0].url, refspec: "+refs/heads/${branchName}:refs/remotes/origin/${branchName}"]
+//            ]
+//          ])
         }
       }
     }
