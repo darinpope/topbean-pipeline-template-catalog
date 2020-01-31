@@ -64,6 +64,7 @@ spec:
                git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
                git config remote.origin.url ${NFS_REPO_LOCATION}
                git fetch --tags --progress ${NFS_REPO_LOCATION} +refs/heads/*:refs/remotes/origin/*
+               ls -last
                git rev-parse refs/remotes/origin/master^{commit}
                git rev-parse refs/remotes/origin/origin/master^{commit}
                git config core.sparsecheckout
