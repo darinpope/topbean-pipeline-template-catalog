@@ -44,6 +44,7 @@ spec:
   environment {
     ARTIFACTORY_MAVEN=credentials("artifactory-maven")
     JFROG_CLI_OFFER_CONFIG=false
+    NFS_REPO_LOCATION="/home/jenkins/git/multirepository-cache.git"
   }
   options {
     skipDefaultCheckout true
@@ -58,8 +59,15 @@ spec:
                #find /home/jenkins/git/multirepository-cache.git -type f
                git --version
                git init ${WORKSPACE}/${subdirectory}
-               git fetch --tags --progress /home/jenkins/git/multirepository-cache.git +refs/heads/*:refs/remotes/origin/*
-               ls -last
+               git fetch --tags --progress ${NFS_REPO_LOCATION} +refs/heads/*:refs/remotes/origin/*
+               git config remote.origin.url ${NFS_REPO_LOCATION}
+               git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/*
+               git config remote.origin.url ${NFS_REPO_LOCATION}
+               git fetch --tags --progress ${NFS_REPO_LOCATION} +refs/heads/*:refs/remotes/origin/*
+               git rev-parse refs/remotes/origin/master^{commit}
+               git rev-parse refs/remotes/origin/origin/master^{commit}
+               git config core.sparsecheckout
+               git checkout -f master
             """
           
 //          checkout([$class: 'GitSCM',
