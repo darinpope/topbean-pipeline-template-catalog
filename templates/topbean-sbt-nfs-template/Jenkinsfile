@@ -54,6 +54,7 @@ spec:
         dir("/home/jenkins/git/multirepository-cache.git") {
           container("sbt") {
             sh """
+               sleep 600
                #find /home/jenkins/git/multirepository-cache.git -type f
                git rev-parse --abbrev-ref HEAD
                git ls-files
