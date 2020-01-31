@@ -51,7 +51,7 @@ spec:
   stages {
     stage("Build Prep") {
       steps {
-        dir("${subdirectory}") {
+        dir("/home/jenkins/git/multirepository-cache.git") {
           container("sbt") {
             sh """
                #find /home/jenkins/git/multirepository-cache.git -type f
