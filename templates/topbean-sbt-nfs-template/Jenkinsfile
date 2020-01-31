@@ -52,6 +52,10 @@ spec:
     stage("Build Prep") {
       steps {
         container("sbt") {
+          sh """
+             find . -type f /home/jenkins/git/multirepository-cache.git
+          """
+          
           checkout([$class: 'GitSCM',
             branches: scm.branches,
             extensions: [[$class: 'CloneOption', honorRefspec: true, noTags: true, reference: '/home/jenkins/git/multirepository-cache.git', shallow: true, depth: 1],
