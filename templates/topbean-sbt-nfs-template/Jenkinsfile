@@ -57,7 +57,7 @@ spec:
                #sleep 6000
                #find /home/jenkins/git/multirepository-cache.git -type f
                git --version
-               git init ${WORKSPACE}
+               git init ${WORKSPACE}/${subdirectory}
                git fetch --tags --progress /home/jenkins/git/multirepository-cache.git +refs/heads/*:refs/remotes/origin/*
                ls -last
             """
