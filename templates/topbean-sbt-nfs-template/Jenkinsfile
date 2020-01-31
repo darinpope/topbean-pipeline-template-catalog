@@ -45,6 +45,9 @@ spec:
     ARTIFACTORY_MAVEN=credentials("artifactory-maven")
     JFROG_CLI_OFFER_CONFIG=false
   }
+  options {
+    skipDefaultCheckout true
+  }
   stages {
     stage("Build Prep") {
       steps {
