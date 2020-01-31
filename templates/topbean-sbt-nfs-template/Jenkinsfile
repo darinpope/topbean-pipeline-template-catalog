@@ -8,15 +8,15 @@ pipeline {
 apiVersion: v1
 kind: Pod
 spec:
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
   containers:
   - name: sbt
     image: hseeberger/scala-sbt:8u222_1.3.7_2.13.1
     command:
     - cat
     tty: true
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
     volumeMounts:
     - name: nfs-volume
       mountPath: "/home/jenkins/git"
@@ -25,9 +25,6 @@ spec:
     command:
     - cat
     tty: true
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
     volumeMounts:
     - name: nfs-volume
       mountPath: "/home/jenkins/git"
